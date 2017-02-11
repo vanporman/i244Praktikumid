@@ -15,8 +15,10 @@
 			$connection = mysqli_connect($host, $user, $pass, $db);
 			$query = "SELECT * FROM vanporman_test";
 			$result = mysqli_query($connection, $query) or die("$query - ".mysqli_error($connection));
-			$row = mysql_fetch_assoc($result);
-			echo $row;
+			//$row = mysqli_fetch_assoc($result);
+			while ($row = $result -> fetch_assoc()){
+				echo "id: " . $row["id"]." - Isik: " . $row["isik"]." - Vanus: ". $row["vanus"]."<br>";
+			}
 			mysqli_close($connection);
 		?>
        <header id="topHeader">
@@ -31,9 +33,9 @@
             <div id="Pic2">
                 <img id="picSize" src="https://www.rover.com/blog/wp-content/uploads/2015/05/dog-candy-junk-food-599x340.jpg" alt="Dog View">
             </div>
-            <!--div id="Pic3">
+            <div id="Pic3">
                 <img id="picSize" src="http://az616578.vo.msecnd.net/files/2016/03/26/635945609159798563-1876533560_dog%20and%20cat.jpg" alt="Cat and Dog View">
-            </div-->
+            </div>
         </div>
       <hr id="bottom">
         <footer id="botFooter">
