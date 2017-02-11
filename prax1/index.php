@@ -12,11 +12,12 @@
 			$pass = "t3st3r123";
 			$db = "test";
 			
-			$l = mysqli_connect($host, $user, $pass, $db);
+			$connection = mysqli_connect($host, $user, $pass, $db);
 			$query = "SELECT * FROM vanporman_test";
-			mysqli_query($l, $query);
-			$row = mysql_fetch_assoc($mysqli_query);
-			mysqli_close($l);
+			$result = mysqli_query($connection, $query) or die("$query - ".mysqli_error($connection));
+			$row = mysql_fetch_assoc($result);
+			echo $row;
+			mysqli_close($connection);
 		?>
        <header id="topHeader">
             <h1>Praktikum I!</h1>
