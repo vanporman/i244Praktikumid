@@ -4,7 +4,7 @@ body{
     margin-right: auto;
 }
 
-#topHeader{
+.headers{
     text-align: center;
     height: 50px;
     width: 100%;
@@ -12,22 +12,28 @@ body{
     border-radius: 10px;
 }
 
-#Pic1{
-    float: left;
-}
-
-#Pic2{
-    float: left;
-}
-
-#Pic3{
-    float: left;
-}
-
-#picSize{
+.picSize{
     padding: 5px;
     width: 304px;
     height: 280px;
+}
+
+.lists{
+    float: left;
+}
+
+#list1{
+    float: left;
+    margin-right: 20px;
+}
+
+#list2{
+    float: right
+}
+
+.text{
+    width: 100%;
+    text-align: justify;
 }
 
 #botFooter{

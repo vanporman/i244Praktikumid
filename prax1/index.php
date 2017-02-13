@@ -21,21 +21,15 @@
 			}
 			mysqli_close($connection);
 		?>
-       <header id="topHeader">
+       <header id="headers">
             <h1>Praktikum I!</h1>
         </header>
         <hr>
         <div id="mainPage">
-            <h3>Pildid</h3>
-            <div id="Pic1">
-                <img id="picSize" src="https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg" alt="Cat View">
-            </div>
-            <div id="Pic2">
-                <img id="picSize" src="https://www.rover.com/blog/wp-content/uploads/2015/05/dog-candy-junk-food-599x340.jpg" alt="Dog View">
-            </div>
-            <div id="Pic3">
-                <img id="picSize" src="http://az616578.vo.msecnd.net/files/2016/03/26/635945609159798563-1876533560_dog%20and%20cat.jpg" alt="Cat and Dog View">
-            </div>
+            <h3 class="headers">Pildid</h3>
+                <img class="picSize" src="https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg" alt="Cat View">
+                <img class="picSize" src="https://www.rover.com/blog/wp-content/uploads/2015/05/dog-candy-junk-food-599x340.jpg" alt="Dog View">
+                <img class="picSize" src="http://az616578.vo.msecnd.net/files/2016/03/26/635945609159798563-1876533560_dog%20and%20cat.jpg" alt="Cat and Dog View">
         </div>
       <hr id="bottom">
         <footer id="botFooter">
@@ -43,6 +37,8 @@
             echo "PHP versioon on: " . phpversion();
             ?>
             <p>:&lt; By Andreas van Porman &copy;</p>
+            <p><a href="http://validator.w3.org/check?uri=referer">
+                <img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict" height="31" width="88" /></a></p>
         </footer>
   </body>
 </html>
