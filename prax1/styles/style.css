@@ -12,8 +12,12 @@ body{
     border-radius: 10px;
 }
 
+#images{
+    align-content: center;
+}
+
 .picSize{
-    padding: 5px;
+    padding: 15px;
     width: 304px;
     height: 280px;
 }
