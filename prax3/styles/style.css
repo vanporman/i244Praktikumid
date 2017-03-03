@@ -1,0 +1,99 @@
+body{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.headers{
+    text-align: center;
+    height: 50px;
+    width: 100%;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+
+h1{
+	color: #FF00FF;
+}
+
+div h3{
+	text-align:center;
+	text-decoration: underline;
+}
+
+#images{
+	display: flex;
+	justify-content: center;
+}
+
+.picSize:hover{
+	border: 5px dashed red;
+	border-radius: 5px;
+	cursor: crosshair;
+}
+
+.picSize{
+    padding: 15px;
+    width: 304px;
+    height: 280px;
+}
+
+.lists{
+    float: left;
+}
+
+#list1{
+    float: left;
+    margin-right: 20px;
+	padding-right: 20px;
+	border-right: 4px solid green;
+}
+
+#list2{
+    float: right;
+	padding-right: 20px;
+	border-left: 4px solid green;
+}
+
+.text{
+    width: 100%;
+    text-align: justify;
+}
+
+#botFooter{
+    clear: both;
+}
+
+#botFooter p {
+    margin: auto;
+    color: black;
+    font-size: small;
+    text-align: center;
+}
+
+#bottom {
+    clear: both;
+    margin: auto;
+}
+
+.lists{
+	background-color: #FFFFFF;
+	border-bottom: 4px solid green;
+	
+}
+
+#yltextp{
+	background-color:lightgrey;
+	border-right: 4px solid green;
+	border-left: 4px solid green;
+}
+
+#aluminetext:hover{
+	border-right: 4px solid green;
+	border-left: 4px solid green;
+	background-color: lightgrey;
+}
+
+h1, h2, h3, p, li, lable, button {
+    font-family: "Verdana", sans-serif;
+}
