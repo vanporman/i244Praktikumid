@@ -14,39 +14,25 @@ $borderType = '';
 $borderColor = '';
 $borderRadius = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    if(empty($_POST['textToChange'])){
-        $textChanger;
-    } else{
+    if (isset($_POST['textToChange']) && $_POST['textToChange'] != ""){
         $textChanger = htmlspecialchars($_POST['textToChange']);
     }
-    if (empty($_POST['backgroundColor'])){
-        $backgroundColor;
-    } else{
+    if (isset($_POST['backgroundColor']) && $_POST['backgroundColor'] != ""){
         $backgroundColor = htmlspecialchars($_POST['backgroundColor']);
     }
-    if (empty($_POST['textColor'])){
-        $textColor;
-    } else {
+    if (isset($_POST['textColor']) && $_POST['textColor'] != ""){
         $textColor = htmlspecialchars($_POST['textColor']);
     }
-    if (empty($_POST['borderThickness'])){
-        $borderThick;
-    } else {
+    if (isset($_POST['borderThickness']) && $_POST['borderThickness'] != ""){
         $borderThick = htmlspecialchars($_POST['borderThickness']);
     }
-    if (empty($_POST['borderType'])){
-        $borderType;
-    } else {
+    if (isset($_POST['borderType']) && $_POST['borderType'] != ""){
         $borderType = htmlspecialchars($_POST['borderType']);
     }
-    if (empty($_POST['borderColor'])){
-        $borderColo;
-    } else {
+    if (isset($_POST['borderColor']) && $_POST['borderColor'] != ""){
         $borderColor = htmlspecialchars($_POST['borderColor']);
     }
-    if (empty($_POST['borderRadius'])){
-        $borderRadius;
-    } else {
+    if (isset($_POST['borderRadius']) && $_POST['borderRadius'] != ""){
         $borderRadius = htmlspecialchars($_POST['borderRadius']);
     }
 }
