@@ -1,5 +1,6 @@
 <?php
 session_start();
+var_dump($_SESSION);
 $textChanger = '';
 $backgroundColor = '';
 $text_Color = '';
@@ -40,21 +41,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 </head>
 <body>
 <?php
-echo '<div style="
+if (!empty($_SESSION)){
+    echo '<div style="
                 width: 380px;
                 height: 100px;
                 background-color:'.$_SESSION['$backgroundColor'].'; 
                 color:'.$_SESSION['$text_Color'].';
                 border:'.$_SESSION['$borderThick'].'px '.$_SESSION['$borderType']. ' '.$_SESSION['$borderColor'].';
-                border-radius:'.$_SESSION['$borderRadius'].'px;
-    "><span style="left: 20px; top: 20px; position: relative;">'.$_SESSION['$textChanger'].'</span></div>';
+                border-radius:'.$_SESSION['$borderRadius'].'px;">
+                <span style="left: 20px; top: 20px; position: relative;">'.$_SESSION['$textChanger'].'</span></div>';
+}
+
 ?>
 <div>
     <form action="" method="post">
         <table border="1">
             <tr>
                 <td colspan="2">
-                    <textarea name="textToChange" rows="3" cols="50"><?php echo $_SESSION['$textChanger']; ?></textarea>
+                    <textarea name="textToChange" rows="3" cols="50"><?php if (!empty($_SESSION)){echo $_SESSION['$textChanger'];}?></textarea>
                 </td>
             </tr>
             <tr>
@@ -75,11 +79,11 @@ echo '<div style="
             <tr>
                 <td>
                     <select name="borderType">
-                        <option value="none" <?php if($_SESSION['$borderType'] == "none") echo 'selected' ?>>no border</option>
-                        <option value="solid" <?php if($_SESSION['$borderType'] == "solid") echo 'selected' ?>>solid</option>
-                        <option value="double" <?php if($_SESSION['$borderType'] == "double") echo 'selected' ?>>double</option>
-                        <option value="dashed" <?php if($_SESSION['$borderType'] == "dashed") echo 'selected' ?>>dashed</option>
-                        <option value="dotted" <?php if($_SESSION['$borderType'] == "dotted") echo 'selected' ?>>dotted</option>
+                        <option value="none" <?php if(!empty($_SESSION)){if($_SESSION['$borderType'] == "none") echo 'selected' ; } ?>>no border</option>
+                        <option value="solid" <?php if(!empty($_SESSION)){if($_SESSION['$borderType'] == "solid") echo 'selected' ;} ?>>solid</option>
+                        <option value="double" <?php if(!empty($_SESSION)){if($_SESSION['$borderType'] == "double") echo 'selected' ;} ?>>double</option>
+                        <option value="dashed" <?php if(!empty($_SESSION)){if($_SESSION['$borderType'] == "dashed") echo 'selected' ;} ?>>dashed</option>
+                        <option value="dotted" <?php if(!empty($_SESSION)){if($_SESSION['$borderType'] == "dotted") echo 'selected' ;} ?>>dotted</option>
                     </select>
                     <label> : Piirjoone stiil</label>
                 </td>
