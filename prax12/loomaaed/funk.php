@@ -28,10 +28,15 @@ function kuva_puurid(){
     global $connection;
     $puurid = array();
     $puuri_nr = '';
-    $query = "SELECT DISTINCT puur FROM vanporman_loomaaed2";
+    $query = "SELECT * FROM vanporman_loomaaed2 GROUP BY puur ORDER BY id";
     $result = mysqli_query($connection, $query);
     while ($loomarida = mysqli_fetch_assoc($result)){
-        print_r($puurid[$puuri_nr][] = $loomarida);
+//    while ($loomarida = $result -> fetch_assoc()){
+//        print_r($puurid[$puuri_nr][] = $loomarida);
+        $puurid[] = $loomarida;
+//        echo '<br/>';
+        echo "<img src='http://enos.itcollege.ee/~aporman/prax12/loomaaed/".$loomarida['liik']."' alt='nimi'>
+        - puuris nr ".$loomarida['puur']."<br/>";
     }
     include_once('views/puurid.html');
 	
