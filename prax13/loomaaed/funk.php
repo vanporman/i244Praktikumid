@@ -15,9 +15,9 @@ function logi(){
     global $connection;
     $errors = array();
     $usr = '';
-    //kasutaja on 'vanporman'
+    //kasutaja on 'vanporman' või 's6ber'
     $psw = '';
-    //parool on 'tereLoomaaed'
+    //parool on 'tereLoomaaed' või 'tereS6ber'
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         if (isset($_POST['user']) && $_POST['user'] != ''){
             $usr = mysqli_real_escape_string($connection, $_POST['user']);
@@ -30,8 +30,8 @@ function logi(){
             $errors[] = "Parool on puudu!";
         }
     }
-    $loginquery = "SELECT usr, psw FROM vanporman_loomaaed_kylastajad WHERE usr = '$usr' AND psw = SHA1('$psw')";
-    $result = mysqli_query($connection, $loginquery);
+    $query = "SELECT usr, psw FROM vanporman_loomaaed_kylastajad WHERE usr = '$usr' AND psw = SHA1('$psw')";
+    $result = mysqli_query($connection, $query);
 
     $count = mysqli_num_rows($result);
 
@@ -39,11 +39,9 @@ function logi(){
         $_SESSION['user'] = $usr;
         header("Location: ?page=loomad");
     }
-    else if ($_SESSION['user'] != $_POST['user'] || $_SESSION['pass'] != $_POST['pass']) {
-        $errors[] = "Vale kasutajanimi või parool!";
-    }
-//    else if ($count == 1 && $_SESSION['pass'] != $psw && $_SESSION['user'] = $usr) {
-//        $errors[] = "Vale kasutajanimi või parool!";
+    //siia võiks tulla ka kasutaja ja parooli õigsuse kontroll - index undefined -> vaja korda saada
+//    elseif ( $_SESSION['user'] != $usr ||  $_SESSION['pass'] = $psw){
+//        $errors[] = "Vale kasutaja või parool!";
 //    }
     include_once('views/login.html');
 }
@@ -57,6 +55,9 @@ function logout(){
 function kuva_puurid(){
 	// siia on vaja funktsionaalsust
     global $connection;
+    if (empty($_SESSION['user'])){
+        header("Location: ?page=login");
+    }
     $puurid = array();
     $puuri_nr = '';
     $query = "SELECT * FROM vanporman_loomaaed2 GROUP BY puur ORDER BY id";
@@ -64,9 +65,6 @@ function kuva_puurid(){
     while ($loomarida = mysqli_fetch_assoc($result)){
 //        print_r($puurid[$puuri_nr][] = $loomarida);
         $puurid[] = $loomarida;
-//        echo '<br/>';
-//        echo "<img src='http://enos.itcollege.ee/~aporman/prax12/loomaaed/".$loomarida['liik']."' alt='nimi'>
-//        - puuris nr ".$loomarida['puur']."<br/>";
     }
     include_once('views/puurid.html');
 	
@@ -74,6 +72,42 @@ function kuva_puurid(){
 
 function lisa(){
 	// siia on vaja funktsionaalsust (13. nädalal)
+    global $connection;
+    if (empty($_SESSION['user'])){
+        header("Location: ?page=login");
+    }
+    $errors = array();
+//    $nimi = '';
+//    $puur = '';
+//    $liik = '';
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if (!empty($_POST)){
+            if (empty($_POST['nimi'])){
+                $errors[] = "Nimi on vajalik";
+            }
+            if (empty($_POST['puur'])){
+                $errors[] = "Puur on kohustuslik";
+            }
+            if (empty($_POST['liik'])){
+                $errors[] = "Liik on kohustuslik";
+            }
+            if (empty($errors)){
+                $nimi = mysqli_real_escape_string($connection, $_POST['nimi']);
+                $puur = mysqli_real_escape_string($connection, $_POST['puur']);
+                $name = mysqli_real_escape_string($connection, $_POST['liik']);
+
+                $query = "INSERT INTO vanporman_loomaaed2 ('nimi', 'puur', 'liik') VALUES ('$nimi', '$puur', '$name')";
+                $result = mysqli_query($connection, $query);
+
+                $new = mysqli_insert_id($connection);
+
+                if ($new > 0 && $result){
+                    header("Location: ?page=loomad");
+                }
+            }
+        }
+    }
 	
 	include_once('views/loomavorm.html');
 	

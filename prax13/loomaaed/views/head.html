@@ -9,9 +9,12 @@
 <div id="wrap">
 	<ul id="menu">
 		<li><a href="?">Pealeht</a></li>
-		<?php if(isset($_SESSION['user'])): ?>
+		<?php if(isset($_SESSION['user']) && $_SESSION['user'] == 'vanporman'): ?>
 			<li><a href="?page=loomad">Loomad</a></li>
 			<li><a href="?page=lisa">Lisa loomi</a></li>
+			<li><a href="?page=logout">Logi välja</a></li>
+		<?php elseif (isset($_SESSION['user']) && $_SESSION['user'] != 'vanporman'): ?>
+			<li><a href="?page=loomad">Loomad</a></li>
 			<li><a href="?page=logout">Logi välja</a></li>
 		<?php else: ?>
 			<li><a href="?page=login">Logi sisse</a></li>
