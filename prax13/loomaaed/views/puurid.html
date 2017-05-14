@@ -1,13 +1,17 @@
 <div id="loomad">
     <?php if (!empty($_SESSION['user'])) echo "<h1>Tere tulemast ".$_SESSION['user']."</h1>"?>
-    <h3>Vaata mis number puurides loomad asuvad:</h3>
-    <?php if (!empty($puurid)):
-	    foreach($puurid as $id=>$puur):
+    <h3>Vaata mis loomad puurides asuvad:</h3>
+    <?php if(!empty($puuri_nr)):
+    foreach ($puuri_nr as $id => $loom):
     ?>
-    <?php echo "<img src='http://enos.itcollege.ee/~aporman/prax12/loomaaed/".$puur['liik']."' alt='nimi'>
-    - puuris nr ".$puur['puur']."<br/>";?>
+    <div class="puur">
+        <p>Puuris nr on <?php echo $id; ?></p>
+        <?php foreach ($loom as $liik): ?>
+        <img src='http://enos.itcollege.ee/~aporman/prax13/loomaaed/<?php echo $liik; ?>' alt='nimi'>
+        <!--<?php next ($puuri_nr) ?>-->
+        <?php endforeach; ?>
+    </div>
     <?php endforeach;
         endif;
     ?>
-    <pre><?php print_r($result);?></pre>
 </div>

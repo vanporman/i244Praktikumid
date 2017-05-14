@@ -53,70 +53,89 @@ function logout(){
 }
 
 function kuva_puurid(){
-	// siia on vaja funktsionaalsust
+    // siia on vaja funktsionaalsust
     global $connection;
-    if (empty($_SESSION['user'])){
-        header("Location: ?page=login");
-    }
     $puurid = array();
-    $puuri_nr = '';
-    $query = "SELECT * FROM vanporman_loomaaed2 GROUP BY puur ORDER BY id";
+    $puuri_nr = array();
+    //vana versioon
+//    $query = "SELECT * FROM vanporman_loomaaed2 GROUP BY puur ORDER BY id";
+    $query = "SELECT DISTINCT nimi, puur FROM vanporman_loomaaed2 ORDER BY puur";
     $result = mysqli_query($connection, $query);
-    while ($loomarida = mysqli_fetch_assoc($result)){
-//        print_r($puurid[$puuri_nr][] = $loomarida);
-        $puurid[] = $loomarida;
+    while ($rida = mysqli_fetch_assoc($result)){
+        $puurid[$rida['puur']] = $rida['puur'];
+//        $puurid[] = $loomarida;
+//        echo '<br/>';
+//        echo "<img src='http://enos.itcollege.ee/~aporman/prax12/loomaaed/".$loomarida['liik']."' alt='nimi'>
+//        - puuris nr ".$loomarida['puur']."<br/>";
     }
+//    $loomad = array();
+    foreach ($puurid as $puur){
+        $puuri_nr[$puur] = array();
+        $loomarida = "SELECT nimi, puur, liik FROM vanporman_loomaaed2 WHERE puur=$puur";
+        $result2 = mysqli_query($connection, $loomarida);
+        while ($rida = mysqli_fetch_assoc($result2)){
+            array_push($puuri_nr[$rida['puur']], $rida['liik']);
+        }
+    }
+//    echo "<pre>".print_r($puuri_nr)."</pre>";
     include_once('views/puurid.html');
-	
+
 }
 
 function lisa(){
-	// siia on vaja funktsionaalsust (13. nädalal)
+    // siia on vaja funktsionaalsust (13. nädalal)
     global $connection;
     if (empty($_SESSION['user'])){
         header("Location: ?page=login");
     }
     $errors = array();
-//    $nimi = '';
-//    $puur = '';
-//    $liik = '';
 
+    //POST ja GET kontroll
+    if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+        echo "<p>GET rikuest kontroll - tulid teiselt lehelt</p>";
+    }
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        echo "<p>POST rikuest kontroll - oled vormi juba kasutanud</p>";
         if (!empty($_POST)){
             if (empty($_POST['nimi'])){
-                $errors[] = "Nimi on vajalik";
+                $errors[] = "Nimi on puudu";
             }
             if (empty($_POST['puur'])){
-                $errors[] = "Puur on kohustuslik";
+                $errors[] = "Puur on puudu";
             }
-            if (empty($_POST['liik'])){
-                $errors[] = "Liik on kohustuslik";
+            if (empty($_FILES['liik']['name'])){
+                $errors[] = "Pilt on puudu";
             }
             if (empty($errors)){
-                $nimi = mysqli_real_escape_string($connection, $_POST['nimi']);
-                $puur = mysqli_real_escape_string($connection, $_POST['puur']);
-                $name = mysqli_real_escape_string($connection, $_POST['liik']);
+                $nimi = htmlspecialchars(mysqli_real_escape_string($connection, $_POST['nimi']));
+                $puur = htmlspecialchars(mysqli_real_escape_string($connection, $_POST['puur']));
+                $upload_kaust = "pildid/";
+                $liik = $upload_kaust.htmlspecialchars(mysqli_real_escape_string($connection, $_FILES['liik']['name']));
 
-                $query = "INSERT INTO vanporman_loomaaed2 ('nimi', 'puur', 'liik') VALUES ('$nimi', '$puur', '$name')";
+                $query = "INSERT INTO vanporman_loomaaed2 ('nimi', 'puur', 'liik') VALUES ('$nimi', '$puur', '$liik')";
                 $result = mysqli_query($connection, $query);
 
-                $new = mysqli_insert_id($connection);
+                $vastus = mysqli_insert_id($connection);
 
-                if ($new > 0 && $result){
+                if ($vastus > 0){
                     header("Location: ?page=loomad");
+                } else {
+                    echo "<p style='color: red'>Pilti ei laetud üles!</p>";
                 }
             }
         }
     }
-	
-	include_once('views/loomavorm.html');
-	
+
+    include_once('views/loomavorm.html');
+
 }
 
 function upload($name){
 	$allowedExts = array("jpg", "jpeg", "gif", "png");
 	$allowedTypes = array("image/gif", "image/jpeg", "image/png","image/pjpeg");
 	$extension = end(explode(".", $_FILES[$name]["name"]));
+//    $tmp = explode('.', $_FILES[$name]["name"]);
+//    $extension = end($tmp);
 
 	if ( in_array($_FILES[$name]["type"], $allowedTypes)
 		&& ($_FILES[$name]["size"] < 100000)
