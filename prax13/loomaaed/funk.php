@@ -32,17 +32,18 @@ function logi(){
     }
     $query = "SELECT usr, psw FROM vanporman_loomaaed_kylastajad WHERE usr = '$usr' AND psw = SHA1('$psw')";
     $result = mysqli_query($connection, $query);
+    $row = mysqli_fetch_assoc($result);
 
     $count = mysqli_num_rows($result);
 
-    if ($count == 1){
+    if ($count == 1 && $row['usr'] == $usr && $row['psw'] == $psw){
         $_SESSION['user'] = $usr;
         header("Location: ?page=loomad");
+        //kui kasutaja on puudu, siis annab mõlemat veateadet(kasutaja puudu ja vale kasutaja või parool)
+    } elseif ($count == 1 && $row['usr'] != $usr || $row['psw'] != $psw) {
+        $errors[] = "Vale kasutaja või parool!";
     }
-    //siia võiks tulla ka kasutaja ja parooli õigsuse kontroll - index undefined -> vaja korda saada
-//    elseif ( $_SESSION['user'] != $usr ||  $_SESSION['pass'] = $psw){
-//        $errors[] = "Vale kasutaja või parool!";
-//    }
+
     include_once('views/login.html');
 }
 
