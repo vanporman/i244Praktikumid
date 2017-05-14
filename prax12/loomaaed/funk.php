@@ -27,17 +27,33 @@ function kuva_puurid(){
 	// siia on vaja funktsionaalsust
     global $connection;
     $puurid = array();
-    $puuri_nr = '';
-    $query = "SELECT * FROM vanporman_loomaaed2 GROUP BY puur ORDER BY id";
+    $puuri_nr = array();
+    //vana versioon
+//    $query = "SELECT * FROM vanporman_loomaaed2 GROUP BY puur ORDER BY id";
+    $query = "SELECT DISTINCT nimi, puur FROM vanporman_loomaaed2 ORDER BY puur";
     $result = mysqli_query($connection, $query);
-    while ($loomarida = mysqli_fetch_assoc($result)){
-//    while ($loomarida = $result -> fetch_assoc()){
-//        print_r($puurid[$puuri_nr][] = $loomarida);
-        $puurid[] = $loomarida;
+    while ($rida = mysqli_fetch_assoc($result)){
+        $puurid[$rida['puur']] = $rida['puur'];
+//        $puurid[] = $loomarida;
 //        echo '<br/>';
-        echo "<img src='http://enos.itcollege.ee/~aporman/prax12/loomaaed/".$loomarida['liik']."' alt='nimi'>
-        - puuris nr ".$loomarida['puur']."<br/>";
+//        echo "<img src='http://enos.itcollege.ee/~aporman/prax12/loomaaed/".$loomarida['liik']."' alt='nimi'>
+//        - puuris nr ".$loomarida['puur']."<br/>";
     }
+
+    $loomad = array();
+
+    foreach ($puurid as $puur){
+        $loomad[$puur] = array();
+        $loomarida = "SELECT nimi, puur, liik FROM vanporman_loomaaed2 WHERE puur=$puur";
+        $result2 = mysqli_query($connection, $loomarida);
+
+        while ($rida = mysqli_fetch_assoc($result2)){
+            array_push($loomad[$rida['puur']], $rida['liik']);
+        }
+    }
+
+    echo "<pre>".print_r($loomad)."</pre>";
+
     include_once('views/puurid.html');
 	
 }

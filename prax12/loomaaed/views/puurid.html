@@ -1,1 +1,10 @@
-
+<?php if(!empty($loomad)):
+    foreach ($loomad as $id => $loom):
+?>
+<div class="puur">
+<?php echo "<img src='http://enos.itcollege.ee/~aporman/prax12/loomaaed/".$loom[0]."' alt='nimi'>
+- puuris nr ".$id."";?>
+</div>
+<?php endforeach;
+        endif;
+?>
