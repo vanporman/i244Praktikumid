@@ -40,19 +40,19 @@ function kuva_puurid(){
 //        - puuris nr ".$loomarida['puur']."<br/>";
     }
 
-    $loomad = array();
+//    $loomad = array();
 
     foreach ($puurid as $puur){
-        $loomad[$puur] = array();
+        $puuri_nr[$puur] = array();
         $loomarida = "SELECT nimi, puur, liik FROM vanporman_loomaaed2 WHERE puur=$puur";
         $result2 = mysqli_query($connection, $loomarida);
 
         while ($rida = mysqli_fetch_assoc($result2)){
-            array_push($loomad[$rida['puur']], $rida['liik']);
+            array_push($puuri_nr[$rida['puur']], $rida['liik']);
         }
     }
 
-    echo "<pre>".print_r($loomad)."</pre>";
+    echo "<pre>".print_r($puuri_nr)."</pre>";
 
     include_once('views/puurid.html');
 	
