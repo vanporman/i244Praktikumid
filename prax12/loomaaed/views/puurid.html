@@ -2,8 +2,11 @@
     foreach ($loomad as $id => $loom):
 ?>
 <div class="puur">
-<?php echo "<img src='http://enos.itcollege.ee/~aporman/prax12/loomaaed/".$loom[0]."' alt='nimi'>
-- puuris nr ".$id."";?>
+    <p>Puuris nr on <?php echo $id; ?></p>
+        <?php foreach ($loom as $liik): ?>
+            <img src='http://enos.itcollege.ee/~aporman/prax12/loomaaed/<?php echo $liik; ?>' alt='nimi'>
+            <?php next ($loomad) ?>
+        <?php endforeach; ?>
 </div>
 <?php endforeach;
         endif;
