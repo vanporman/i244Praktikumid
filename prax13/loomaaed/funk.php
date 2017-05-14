@@ -36,11 +36,12 @@ function logi(){
 
     $count = mysqli_num_rows($result);
 
-    if ($count == 1 && $row['usr'] == $usr && $row['psw'] == $psw){
+    if ($count == 1){
         $_SESSION['user'] = $usr;
         header("Location: ?page=loomad");
         //kui kasutaja on puudu, siis annab mõlemat veateadet(kasutaja puudu ja vale kasutaja või parool)
-    } elseif ($count == 1 && $row['usr'] != $usr || $row['psw'] != $psw) {
+    }
+    elseif ($count == 1 && $row['usr'] != $usr || $row['psw'] != $psw) {
         $errors[] = "Vale kasutaja või parool!";
     }
 
