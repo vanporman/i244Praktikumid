@@ -1,0 +1,32 @@
+<div id="">
+    <?php if (!empty($_SESSION['user'])) echo "<h1>Tere tulemast ".$_SESSION['user']."</h1>"?>
+    <h3>Vaata mis loomad puurides asuvad:</h3>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>NIMI</th>
+            <th>PUUR</th>
+            <th>LIIK</th>
+            <?php if ($_SESSION['role'] == 'admin'): ?>
+            <th><form id="muutmine" action="?page=muuda" method="POST"><input type="submit" value="muuda"/></form></th>
+            <?php endif ?>
+        </tr>
+            <?php
+                if(!empty($puurid)):
+                foreach ($puurid as $id => $loom):
+            ?>
+        <tr>
+            <td><?php echo htmlspecialchars($loom['id']); ?></td>
+            <td><?php echo htmlspecialchars($loom['nimi']); ?></td>
+            <td><?php echo htmlspecialchars($loom['puur']); ?></td>
+            <td><img src="<?php echo htmlspecialchars($loom['liik']); ?>" alt="<?php echo htmlspecialchars($loom['nimi']); ?>" height="50" /></td>
+            <?php if ($_SESSION['role'] == 'admin'): ?>
+            <td><input type="checkbox" name="id" value="<?php echo htmlspecialchars($loom['id']); ?>" form="muutmine"/></td>
+            <?php endif ?>
+        </tr>
+        <?php
+            endforeach;
+            endif;
+        ?>
+    </table>
+</div>
