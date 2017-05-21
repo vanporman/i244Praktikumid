@@ -75,29 +75,36 @@ function kuva_puurid(){
 
 }
 
-function hangi_loom($id){
+function hangi_loom(){
     global $connection;
     $leitud_loom = array();
-    $query = "SELECT id, nimi, puur, liik FROM vanporman_loomaaed2 WHERE id = $id";
+    $valitud_looma_id = '';
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if (isset($_POST['looma_id'])){
+            $valitud_looma_id = mysqli_real_escape_string($connection, $_POST['looma_id']);
+        }
+    }
+    $query = "SELECT id, nimi, puur, liik FROM vanporman_loomaaed2 WHERE id = $valitud_looma_id";
     $result = mysqli_query($connection, $query);
 
-    $row = mysqli_fetch_assoc($result);
-    $looma_id = $row['id'];
+    while ($row = mysqli_fetch_assoc($result)){
+        $leitud_loom[] = $row;
+    };
 
-    if ($looma_id == $id){
-        array_push($leitud_loom[$row['id']]);
-    }
-    else {
-        header("Location: ?");
-    }
+    include_once('views/muudavorm.html');
 }
 
-function muuda(){
+function muuda_loom(){
     global $connection;
     if (empty($_SESSION['user']) && $_SESSION['role'] != 'admin'){
         header("Location: ?page=login");
     }
     $errors = array();
+    $id = '';
+    $uus_nimi = '';
+    $uus_puur = '';
+    $upload_kaust = 'pildid/';
+    $uus_liik = '';
 
     //POST ja GET kontroll
     if ($_SERVER['REQUEST_METHOD'] == 'GET'){
@@ -107,11 +114,30 @@ function muuda(){
         if (isset($_POST['id']) && $_POST['id'] != ''){
             $id = mysqli_real_escape_string($connection, $_POST['id']);
         }
-        else {
-            header("Location: ?");
+        if (isset($_POST['nimi']) && $_POST['nimi'] != ''){
+            $uus_nimi = mysqli_real_escape_string($connection, $_POST['nimi']);
+        }
+        if (isset($_POST['puur']) && $_POST['puur'] != ''){
+            $uus_puur = mysqli_real_escape_string($connection, $_POST['puur']);
+        }
+        if (isset($_FILES['liik']['name']) && $_FILES['liik']['name'] != ''){
+            $uus_liik = $upload_kaust.htmlspecialchars(mysqli_real_escape_string($connection, $_FILES['liik']['name']));
+        } else {
+            $query1 = "SELECT liik FROM vanporman_loomaaed2 WHERE id = $id";
+            $result1 = mysqli_query($connection, $query1);
+            $value = mysqli_fetch_assoc($result1);
+            $uus_liik = $value['liik'];
         }
     }
 
+    $query = "UPDATE vanporman_loomaaed2 SET nimi = '$uus_nimi', puur = $uus_puur, liik = '$uus_liik' WHERE id = $id";
+    $result = mysqli_query($connection, $query);
+    header("Location: ?page=loomad");
+
+    if ($result){
+        $_SESSION['uus_id'] = mysqli_insert_id($connection);
+        header("Location ?");
+    }
     include_once('views/muudavorm.html');
 }
 
@@ -145,7 +171,8 @@ function lisa(){
                 $upload_kaust = "pildid/";
                 $liik = $upload_kaust.htmlspecialchars(mysqli_real_escape_string($connection, $_FILES['liik']['name']));
 
-                $query = "INSERT INTO vanporman_loomaaed2 ('nimi', 'puur', 'liik') VALUES ('$nimi', '$puur', '$liik')";
+                $query = "INSERT INTO vanporman_loomaaed2 (nimi, puur, liik) VALUES ('$nimi', '$puur', '$liik')";
+//                $query = "INSERT INTO vanporman_loomaaed2 (nimi, puur) VALUES ('$nimi', '$puur')";
                 $result = mysqli_query($connection, $query);
 
                 $vastus = mysqli_insert_id($connection);

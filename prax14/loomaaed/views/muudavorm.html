@@ -1,12 +1,40 @@
+<table border="1">
+	<tr>
+		<th>ID</th>
+		<th>NIMI</th>
+		<th>PUUR</th>
+		<th>LIIK</th>
+	</tr>
+	<?php
+		if (!empty($leitud_loom)):
+		foreach ($leitud_loom as $looma_id => $loom):
+	?>
+	<tr>
+		<td><?php echo htmlspecialchars($loom['id']); ?></td>
+		<td><?php echo htmlspecialchars($loom['nimi']); ?></td>
+		<td><?php echo htmlspecialchars($loom['puur']); ?></td>
+		<td><img src="<?php echo htmlspecialchars($loom['liik']); ?>" alt="<?php echo htmlspecialchars($loom['nimi']); ?>" height="50" /></td>
+	</tr>
+	<?php
+		endforeach;
+		endif;
+	?>
+</table>
+<?php
+		if (!empty($leitud_loom)):
+		foreach ($leitud_loom as $looma_id => $loom):
+?>
 <form action="?page=muuda" method="POST" enctype="multipart/form-data">
-	<input type="text" name="id" value="<?php if (isset($loom['id'])) echo htmlspecialchars($loom['id']); ?>"/><br/>
+	<input type="hidden" name="id" value="<?php if (isset($loom['id'])) echo htmlspecialchars($loom['id']); ?>"/><br/>
+	<label>Nimi</label>
 	<input type="text" name="nimi" placeholder="nimi" value="<?php if (isset($loom['nimi'])) echo htmlspecialchars($loom['nimi']); ?>"/><br/>
+	<label>Puur</label>
 	<input type="number" name="puur" placeholder="puur" value="<?php if (isset($loom['puur'])) echo htmlspecialchars($loom['puur']); ?>"/><br/>
-	<!--Näopilt: <input type="file" name="liik"/><br/>-->
-	<input type="submit" value="Muuda"/>
+	Näopilt: <input type="file" name="liik"/><br/>
+	<!--<input type="hidden" name="liik2stay" placeholder="liik" value="<?php if (isset($loom['liik'])) echo htmlspecialchars($loom['liik']); ?>"/><br/>-->
+	<input type="submit" value="muuda"/>
 </form>
-<?php if (isset($errors)):?>
-		<?php foreach($errors as $error):?>
-			<div style="color:red;"><?php echo htmlspecialchars($error); ?></div>
-		<?php endforeach;?>
-	<?php endif;?>
+<?php
+	endforeach;
+	endif;
+?>

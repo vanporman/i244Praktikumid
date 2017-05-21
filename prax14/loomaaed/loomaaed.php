@@ -23,9 +23,12 @@ switch($page){
 	case "lisa":
 		lisa();
 	break;
+    case "hangi":
+        hangi_loom();
+    break;
     case "muuda":
-        muuda();
-        break;
+        muuda_loom();
+    break;
 	default:
 		include_once('views/v2rav.html');
 	break;

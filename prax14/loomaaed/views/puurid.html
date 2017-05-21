@@ -1,5 +1,11 @@
 <div id="">
     <?php if (!empty($_SESSION['user'])) echo "<h1>Tere tulemast ".$_SESSION['user']."</h1>"?>
+    <p style="color:red">
+        <?php if (!empty($_SESSION['uus_id'])){
+		echo 'Uue rea id: '.$_SESSION['uus_id'];
+		unset($_SESSION['uus_id']);
+	}?>
+    </p>
     <h3>Vaata mis loomad puurides asuvad:</h3>
     <table border="1">
         <tr>
@@ -8,7 +14,7 @@
             <th>PUUR</th>
             <th>LIIK</th>
             <?php if ($_SESSION['role'] == 'admin'): ?>
-            <th><form id="muutmine" action="?page=muuda" method="POST"><input type="submit" value="muuda"/></form></th>
+            <th><form id="muutmine" action="?page=hangi" method="POST"><input type="submit" value="muuda"/></form></th>
             <?php endif ?>
         </tr>
             <?php
@@ -21,7 +27,7 @@
             <td><?php echo htmlspecialchars($loom['puur']); ?></td>
             <td><img src="<?php echo htmlspecialchars($loom['liik']); ?>" alt="<?php echo htmlspecialchars($loom['nimi']); ?>" height="50" /></td>
             <?php if ($_SESSION['role'] == 'admin'): ?>
-            <td><input type="checkbox" name="id" value="<?php echo htmlspecialchars($loom['id']); ?>" form="muutmine"/></td>
+            <td><input type="radio" name="looma_id" value="<?php echo htmlspecialchars($loom['id']); ?>" form="muutmine"/></td>
             <?php endif ?>
         </tr>
         <?php
