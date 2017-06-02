@@ -2,40 +2,39 @@
 <html>
 <head>
     <meta charset="UTF-8">
-	<script>
-		var clicks = 0;
-		function clickME() {
-			clicks += 1;
-			document.getElementById("clicks").innerHTML = clicks;
-		}
-	</script>
     <title>title</title>
 </head>
 <body>
 <?php
-//$host = "localhost";
-//$user = "test";
-//$pass = "t3st3r123";
-//$db = "test";
+$host = "localhost";
+$user = "test";
+$pass = "t3st3r123";
+$db = "test";
 
-//$connection = mysqli_connect($host, $user, $pass, $db);
-//$laiks = '';
-//$laiks = $_POST['laigid'];
-  
-//$query = "INSERT INTO vanporman_laigid (laik) VALUES('$laiks')";
+$connection = mysqli_connect($host, $user, $pass, $db);
 
-//$result = mysqli_query($connection, $query) or die("$query - " . mysqli_error($connection));
+if(isset($_POST['saadalaike'])){
+//    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+//        if (isset($_POST['laik']) && $_POST['laik'] != ""){
+//            $laik = htmlspecialchars(mysqli_real_escape_string($connection, $_POST['laik']));
+//        }
+//    }
+//    if ($_POST['laik'] == 1){
+        $query = "UPDATE vanporman_laigid SET page_count = page_count + 1";
+        $result = mysqli_query($connection, $query);
+//    }
+}
 
+$query2 = "SELECT page_count FROM vanporman_laigid";
+$result2 = mysqli_query($connection, $query2);
+$value = mysqli_fetch_assoc($result2);
 
-//mysqli_close($connection);
+echo "Tseki juba neid laike: <b>".$value['page_count']."</b>!";
 
 ?>
 	<form action="" method="post">
-	<input type="hidden" name="laigid" value=1>
-	<input type="button" onClick="clickME()" value="Laigid">
-	<!--<input type="submit" value="Laigid">-->
+<!--        <input type="hidden" name="laik" value="1">-->
+	    <input type="submit" name="saadalaike" value="Laigi!">
 	</form>
-	
-	<p>Clicks: <a id="clicks">0</a></p>
 </body>
-</head>
+</html>

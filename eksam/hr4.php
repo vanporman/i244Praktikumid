@@ -37,3 +37,4 @@ $oige_rida = $ridu - 1;
 echo "Lehe külastusi: ".$oige_rida."<br>";
 $myfile2 = fopen("lehekylastused_aeg.txt", "r") or die("Unable to open file!");
 echo "Viimati külastati lehte: ".fgets($myfile2);
+fclose($myfile2);
