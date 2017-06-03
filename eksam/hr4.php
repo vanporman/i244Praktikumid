@@ -17,11 +17,11 @@ $_SESSION['loendur'] = 1;
 
 if ($_SESSION['loendur'] == 1){
     $myfile = fopen("lehekylastused.txt", "a") or die("Unable to open file!");
-    $kord = date("Y.m.d H:m:s")."\n" ;
+    $kord = date("Y.m.d H:i:s")."\n" ;
     fwrite($myfile, $kord);
     fclose($myfile);
     $myfile2 = fopen("lehekylastused_aeg.txt", "w")  or die("Unable to open file!");
-    $aeg = date("Y.m.d H:m:s");
+    $aeg = date("Y.m.d H:i:s");
     fwrite($myfile2, $aeg);
     fclose($myfile2);
 }
@@ -36,5 +36,5 @@ fclose($myfile);
 $oige_rida = $ridu - 1;
 echo "Lehe külastusi: ".$oige_rida."<br>";
 $myfile2 = fopen("lehekylastused_aeg.txt", "r") or die("Unable to open file!");
-echo "Viimati külastati lehte: ".fgets($myfile2);
+echo "Viimase külastuse aeg on: ".fgets($myfile2);
 fclose($myfile2);
