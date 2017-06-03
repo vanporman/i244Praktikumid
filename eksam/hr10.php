@@ -21,13 +21,15 @@ while(!feof($myfile)){
 
 $hinnetesumma = 0;
 $myfile = fopen("hinne.txt", "r") or die("Unable to open file!");
-while(!feof($myfile)){
-    $hindedsumma = fgets($myfile);
-    $hinnetesumma = $hinnetesumma + $hinnetesumma;
+while (!feof($myfile)){
+    $value = fgets($myfile);
+    $hinnetesumma = $hinnetesumma + $value;
 }
 
 fclose($myfile);
 $oiged_hinded = $hindeid - 1;
+echo "Hindeid kokku: ".$oiged_hinded."<br>";
+echo "Hinnete summa: ".$hinnetesumma."<br>";
 $keskmine_hinne = $hinnetesumma/$oiged_hinded;
 echo "Keskmine hinne: ".$keskmine_hinne."<br>";
 
